@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 )
 
@@ -55,7 +56,9 @@ func sayHello(chatID int64) error {
 	if err != nil {
 		return err
 	}
-	res, err := http.Post("https://api.telegram.org/bot7934825396:AAEW-hCX5aTTT7jhDS4S4iqiGq9eNcZCqds/sendMessage", "application/json", bytes.NewBuffer(reqByte))
+	bottoken := os.Getenv("BOT_TOKEN")
+	url := fmt.Sprintf("https://api.telegram.org/%s/sendMessage", bottoken)
+	res, err := http.Post(url, "application/json", bytes.NewBuffer(reqByte))
 	if err != nil {
 		return err
 	}
